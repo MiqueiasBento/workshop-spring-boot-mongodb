@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.mongodb_learn.dto.AuthorDTO;
+import com.example.mongodb_learn.dto.CommentDTO;
 import com.example.mongodb_learn.entities.Post;
 import com.example.mongodb_learn.entities.User;
 import com.example.mongodb_learn.repositories.PostRepository;
@@ -39,6 +40,13 @@ public class Instantion implements CommandLineRunner {  // Implementa CommandLin
 		
 		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
+		
+		CommentDTO comment1 = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2018"), new AuthorDTO(alex));
+		CommentDTO comment2 = new CommentDTO("Aproveie", sdf.parse("22/03/2018"), new AuthorDTO(bob));
+		CommentDTO comment3 = new CommentDTO("Tenha um otimo dia!", sdf.parse("23/03/2018"), new AuthorDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(comment1, comment2));
+		post2.getComments().add(comment3);
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
