@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.mongodb_learn.dto.UserDTO;
 import com.example.mongodb_learn.entities.User;
 import com.example.mongodb_learn.repositories.UserRepository;
 import com.example.mongodb_learn.services.exception.ObjectNotFoundException;
@@ -22,4 +23,13 @@ public class UserService {
 		// Funcao simpliifado, caso contrario o retorno do "userRepository.findById(id)" seria um Optional
 		return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuario nao encontrado"));
 	}
+	
+	public User insert(User user) {
+		return userRepository.insert(user);
+	}
+	
+	public User fromDTO(UserDTO userDto) {
+		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
+	}
+	
 }
