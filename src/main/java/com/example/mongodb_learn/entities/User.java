@@ -1,9 +1,12 @@
 package com.example.mongodb_learn.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")		// Indica que se trata de uma coleção do MongoDB
@@ -14,6 +17,10 @@ public class User implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	
+	@DBRef(lazy = true)  // Indica que a lista está referenciada em outro documento no banco (referência ao banco MongoDB), e será carregada só quando necessário
+	private List<Post> posts = new ArrayList<>();
+
 	
 	public User() {
 	}
@@ -48,7 +55,15 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
 
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
