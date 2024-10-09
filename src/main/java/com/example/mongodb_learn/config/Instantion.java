@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.mongodb_learn.dto.AuthorDTO;
 import com.example.mongodb_learn.entities.Post;
 import com.example.mongodb_learn.entities.User;
 import com.example.mongodb_learn.repositories.PostRepository;
@@ -36,8 +37,8 @@ public class Instantion implements CommandLineRunner {  // Implementa CommandLin
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));  // Insere os novos usuários no repositório.
 		
-		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", maria);
-		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", maria);
+		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo, abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 	}
