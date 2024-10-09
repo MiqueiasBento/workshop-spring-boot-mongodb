@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.mongodb_learn.dto.UserDTO;
+import com.example.mongodb_learn.entities.Post;
 import com.example.mongodb_learn.entities.User;
 import com.example.mongodb_learn.services.UserService;
 
@@ -62,5 +63,11 @@ public class UserResource {
 		user = service.update(user);
 		
 		return ResponseEntity.noContent().build();	// Retorna um codigo vazio ja que nao precisa retornar nada no update
+	}
+	
+	@GetMapping(value = "/{id}/posts")
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+		User user = service.findById(id);
+		return ResponseEntity.ok().body(user.getPosts());	// Retorna uma lista de posts do usuario selecionado
 	}
 }
