@@ -1,5 +1,6 @@
 package com.example.mongodb_learn.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,25 @@ public class PostResource {
 	}
 	
 	@GetMapping(value = "/titlesearch")
-	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+	public ResponseEntity<List<Post>> findByTitle(@RequestParam(defaultValue = "") String text) {
 		// Retorna um Post a partir do paramentro passado na URL com o valor 'text'
 		text = URL.decodeParam(text);
 		List<Post> list = service.findByTitle(text);
+		
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(
+			@RequestParam(defaultValue = "") String text, 
+			@RequestParam(defaultValue = "") String minDate, 	
+			@RequestParam(defaultValue = "") String maxDate) {
+		// Retorna Posts a partir do paramentro passado na URL com o valor 'text', 'minDate' e 'maxDate'
+		text = URL.decodeParam(text);
+		Date min = URL.convertDate(minDate, new Date(0L));
+		Date max = URL.convertDate(maxDate, new Date());
+		
+		List<Post> list = service.fullSearch(text, min, max);
 		
 		return ResponseEntity.ok().body(list);
 	}
