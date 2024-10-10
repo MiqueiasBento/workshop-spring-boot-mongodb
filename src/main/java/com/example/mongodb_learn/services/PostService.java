@@ -22,4 +22,9 @@ public class PostService {
 		// Retorna um objeto Post caso encontre, senao retorna uma excecao
 		return postRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Objeto nao encontrado"));
 	}
+	
+	// Retorna os Posts com o atributo titulo igual ao solicitado, funcao montada pelo Spring Data
+	public List<Post> findByTitle(String text) {
+		return postRepository.findByTitleContainingIgnoreCase(text);	
+	}
 }
