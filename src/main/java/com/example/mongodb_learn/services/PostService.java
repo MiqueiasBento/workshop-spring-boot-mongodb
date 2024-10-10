@@ -25,6 +25,6 @@ public class PostService {
 	
 	// Retorna os Posts com o atributo titulo igual ao solicitado, funcao montada pelo Spring Data
 	public List<Post> findByTitle(String text) {
-		return postRepository.findByTitleContainingIgnoreCase(text);	
+		return postRepository.searchTitle(text);	
 	}
 }
